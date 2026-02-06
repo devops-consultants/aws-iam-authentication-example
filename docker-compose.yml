@@ -40,7 +40,7 @@ services:
   # Auto-creates topics for convenience during development
   # ---------------------------------------------------------------------------
   kafka:
-    image: confluentinc/cp-kafka:7.9.5
+    image: confluentinc/cp-kafka:8.1.1
     hostname: kafka
     container_name: connectivity-test-kafka
     depends_on:
@@ -68,7 +68,7 @@ services:
   # Uses password auth locally (IAM auth only works with RDS)
   # ---------------------------------------------------------------------------
   postgres:
-    image: postgres:15-alpine
+    image: postgres:18-alpine
     hostname: postgres
     container_name: connectivity-test-postgres
     ports:
