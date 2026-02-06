@@ -6,7 +6,7 @@
 # =============================================================================
 
 # Use Python 3.11 slim as base image for smaller footprint
-FROM python:3.11-slim
+FROM python:3.14-slim
 
 # -----------------------------------------------------------------------------
 # Environment Configuration
