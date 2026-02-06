@@ -1,0 +1,42 @@
+# Web framework
+fastapi==0.109.0
+uvicorn==0.27.0
+
+# Kafka consumer with MSK IAM authentication
+confluent-kafka==2.3.0
+aws-msk-iam-sasl-signer-python==1.0.1
+
+# OpenAI client for embedding generation
+openai>=1.50.0
+
+# OpenSearch client with AWS IAM authentication
+opensearch-py==2.4.0
+requests-aws4auth==1.2.3
+aiohttp>=3.9.0
+
+# Async PostgreSQL client for RDS with IAM authentication
+asyncpg==0.29.0
+
+# AWS SDK for IAM token generation and credentials
+boto3==1.34.0
+
+# Redis client for ElastiCache with IAM authentication
+redis>=5.0.0
+
+# Configuration management
+python-dotenv==1.0.0
+pydantic==2.5.0
+pydantic-settings==2.1.0
+
+# Structured JSON logging
+structlog==23.2.0
+
+# Development dependencies
+pytest==7.4.3
+pytest-asyncio==0.21.1
+pytest-mock==3.12.0
+pytest-cov==4.1.0
+black==23.11.0
+flake8==6.1.0
+mypy==1.7.1
+isort==5.12.0

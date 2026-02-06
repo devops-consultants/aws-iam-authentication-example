@@ -1,0 +1,163 @@
+# =============================================================================
+# AWS Connectivity Test - Local Development Environment
+# =============================================================================
+# This docker-compose file provides a local development environment with:
+# - Kafka (via Zookeeper) for message consumption testing
+# - PostgreSQL for database connectivity testing
+#
+# Note: OpenSearch and MSK IAM auth cannot be fully simulated locally.
+# This environment is for basic development and unit testing.
+# Full integration testing requires deployment to a Kubernetes environment
+# with actual AWS services.
+# =============================================================================
+
+version: '3.8'
+
+services:
+  # ---------------------------------------------------------------------------
+  # Zookeeper for Kafka
+  # ---------------------------------------------------------------------------
+  # Zookeeper manages Kafka broker metadata and leader election
+  # Required for Kafka to function properly
+  # ---------------------------------------------------------------------------
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.5.0
+    hostname: zookeeper
+    container_name: connectivity-test-zookeeper
+    ports:
+      - "2181:2181"
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    networks:
+      - connectivity-test-network
+
+  # ---------------------------------------------------------------------------
+  # Kafka Broker
+  # ---------------------------------------------------------------------------
+  # Local Kafka broker for testing message consumption
+  # Uses PLAINTEXT protocol locally (MSK IAM auth only works in AWS)
+  # Auto-creates topics for convenience during development
+  # ---------------------------------------------------------------------------
+  kafka:
+    image: confluentinc/cp-kafka:7.5.0
+    hostname: kafka
+    container_name: connectivity-test-kafka
+    depends_on:
+      - zookeeper
+    ports:
+      - "9092:9092"
+      - "9093:9093"
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2181'
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:29092,PLAINTEXT_HOST://localhost:9092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: 'true'
+    networks:
+      - connectivity-test-network
+
+  # ---------------------------------------------------------------------------
+  # PostgreSQL Database
+  # ---------------------------------------------------------------------------
+  # Local PostgreSQL for testing database connectivity
+  # Uses password auth locally (IAM auth only works with RDS)
+  # ---------------------------------------------------------------------------
+  postgres:
+    image: postgres:15-alpine
+    hostname: postgres
+    container_name: connectivity-test-postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: connectivity_test
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - connectivity-test-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ---------------------------------------------------------------------------
+  # AWS Connectivity Test Application
+  # ---------------------------------------------------------------------------
+  # The main application container for local development
+  # Configured for local services (no IAM auth, PLAINTEXT Kafka)
+  # ---------------------------------------------------------------------------
+  connectivity-test:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: connectivity-test-app
+    depends_on:
+      kafka:
+        condition: service_started
+      postgres:
+        condition: service_healthy
+    ports:
+      - "8080:8080"
+    environment:
+      # Kafka configuration (local, no IAM)
+      KAFKA_BOOTSTRAP_SERVERS: kafka:29092
+      KAFKA_TOPICS: test-topic
+      KAFKA_CONSUMER_GROUP: connectivity-test-local
+      KAFKA_SECURITY_PROTOCOL: PLAINTEXT
+      # Disable MSK IAM auth for local development
+      KAFKA_USE_IAM_AUTH: "false"
+
+      # PostgreSQL configuration (local, password auth)
+      POSTGRES_HOST: postgres
+      POSTGRES_PORT: 5432
+      POSTGRES_DB: connectivity_test
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      # Disable IAM auth for local development
+      POSTGRESQL_USE_IAM_AUTH: "false"
+
+      # OpenSearch configuration (mock/disabled for local)
+      OPENSEARCH_ENDPOINT: http://localhost:9200
+      OPENSEARCH_INDEX: test-index
+      OPENSEARCH_USE_IAM_AUTH: "false"
+      OPENSEARCH_ENABLED: "false"
+
+      # OpenAI configuration (requires real API key for testing)
+      # Set OPENAI_API_KEY in .env file or environment
+      OPENAI_EMBEDDING_MODEL: text-embedding-3-small
+      OPENAI_ENABLED: "false"
+
+      # Application configuration
+      LOG_LEVEL: DEBUG
+      LOG_FORMAT: json
+      AWS_REGION: eu-west-2
+
+    networks:
+      - connectivity-test-network
+    restart: unless-stopped
+
+# -----------------------------------------------------------------------------
+# Volumes
+# -----------------------------------------------------------------------------
+# Persistent volume for PostgreSQL data
+# Data survives container restarts during development
+# -----------------------------------------------------------------------------
+volumes:
+  postgres-data:
+
+# -----------------------------------------------------------------------------
+# Networks
+# -----------------------------------------------------------------------------
+# Bridge network for inter-container communication
+# All services can reach each other by hostname
+# -----------------------------------------------------------------------------
+networks:
+  connectivity-test-network:
+    driver: bridge
