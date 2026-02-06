@@ -29,7 +29,11 @@ pydantic==2.5.0
 pydantic-settings==2.1.0
 
 # Structured JSON logging
+<<<<<<< HEAD
 structlog==25.5.0
+=======
+structlog==23.3.0
+>>>>>>> origin/renovate/structlog-23.x
 
 # Development dependencies
 pytest==9.0.2
