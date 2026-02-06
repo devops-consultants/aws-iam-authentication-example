@@ -39,4 +39,4 @@ pytest-cov==4.1.0
 black==26.1.0
 flake8==7.3.0
 mypy==1.19.1
-isort==5.13.2
+isort==7.0.0
