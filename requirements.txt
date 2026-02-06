@@ -29,7 +29,7 @@ pydantic==2.12.5
 pydantic-settings==2.12.0
 
 # Structured JSON logging
-structlog==23.2.0
+structlog==25.5.0
 
 # Development dependencies
 pytest==9.0.2
