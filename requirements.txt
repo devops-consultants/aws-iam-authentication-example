@@ -1,6 +1,6 @@
 # Web framework
 fastapi==0.109.0
-uvicorn==0.27.0
+uvicorn==0.40.0
 
 # Kafka consumer with MSK IAM authentication
 aws-msk-iam-sasl-signer-python==1.0.2
