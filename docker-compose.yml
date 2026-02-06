@@ -68,7 +68,7 @@ services:
   # Uses password auth locally (IAM auth only works with RDS)
   # ---------------------------------------------------------------------------
   postgres:
-    image: postgres:15-alpine
+    image: postgres:18-alpine
     hostname: postgres
     container_name: connectivity-test-postgres
     ports:
