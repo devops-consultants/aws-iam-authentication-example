@@ -10,7 +10,7 @@ aws-msk-iam-sasl-signer-python==1.0.1
 openai>=1.50.0
 
 # OpenSearch client with AWS IAM authentication
-opensearch-py==2.8.0
+opensearch-py==3.1.0
 requests-aws4auth==1.2.3
 aiohttp>=3.9.0
 
