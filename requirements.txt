@@ -24,7 +24,7 @@ boto3==1.34.0
 redis>=5.0.0
 
 # Configuration management
-python-dotenv==1.0.0
+python-dotenv==1.2.1
 pydantic==2.5.0
 pydantic-settings==2.1.0
 
