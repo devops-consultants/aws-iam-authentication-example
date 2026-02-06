@@ -21,7 +21,7 @@ services:
   # Required for Kafka to function properly
   # ---------------------------------------------------------------------------
   zookeeper:
-    image: confluentinc/cp-zookeeper:7.5.0
+    image: confluentinc/cp-zookeeper:7.9.5
     hostname: zookeeper
     container_name: connectivity-test-zookeeper
     ports:
