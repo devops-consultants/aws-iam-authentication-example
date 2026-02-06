@@ -25,7 +25,7 @@ redis>=5.0.0
 
 # Configuration management
 python-dotenv==1.0.0
-pydantic==2.5.0
+pydantic==2.12.5
 pydantic-settings==2.1.0
 
 # Structured JSON logging
