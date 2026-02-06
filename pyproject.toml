@@ -4,6 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "aws-connectivity-test"
+
+version = "0.1.12"
 version = "0.1.11"
 description = "AWS connectivity test service for MSK, RDS, OpenSearch, and OpenAI with IAM authentication"
 authors = [
