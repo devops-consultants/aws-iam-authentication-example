@@ -40,7 +40,7 @@ services:
   # Auto-creates topics for convenience during development
   # ---------------------------------------------------------------------------
   kafka:
-    image: confluentinc/cp-kafka:7.5.0
+    image: confluentinc/cp-kafka:7.9.5
     hostname: kafka
     container_name: connectivity-test-kafka
     depends_on:
