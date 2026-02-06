@@ -7,7 +7,7 @@ name = "aws-connectivity-test"
 version = "0.1.0"
 description = "AWS connectivity test service for MSK, RDS, OpenSearch, and OpenAI with IAM authentication"
 authors = [
-    {name = "Hyperoptic", email = "engineering@hyperoptic.com"},
+    {name = "Rob Coward", email = "rob.coward@devops-consultants.co.uk"},
 ]
 dependencies = [
     # Web framework

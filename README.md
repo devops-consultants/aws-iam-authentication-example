@@ -426,11 +426,5 @@ Version is managed in `pyproject.toml` and `Chart.yaml`.
 
 ## License
 
-Copyright © 2025 Hyperoptic. All rights reserved.
+Copyright © 2026 DevOps Consultants. All rights reserved.
 
-## Support
-
-For issues or questions:
-- Create a Jira issue
-- Contact the platform team
-- Check internal documentation
