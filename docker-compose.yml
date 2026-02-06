@@ -21,7 +21,7 @@ services:
   # Required for Kafka to function properly
   # ---------------------------------------------------------------------------
   zookeeper:
-    image: confluentinc/cp-zookeeper:7.5.0
+    image: confluentinc/cp-zookeeper:7.9.5
     hostname: zookeeper
     container_name: connectivity-test-zookeeper
     ports:
@@ -40,7 +40,7 @@ services:
   # Auto-creates topics for convenience during development
   # ---------------------------------------------------------------------------
   kafka:
-    image: confluentinc/cp-kafka:7.5.0
+    image: confluentinc/cp-kafka:7.9.5
     hostname: kafka
     container_name: connectivity-test-kafka
     depends_on:
