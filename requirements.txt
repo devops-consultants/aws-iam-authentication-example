@@ -2,31 +2,33 @@
 fastapi==0.128.2
 uvicorn==0.40.0
 
-# Async Kafka consumer with MSK IAM auth
-aiokafka==0.10.0
+# Kafka consumer with MSK IAM authentication
+confluent-kafka==2.13.0
 aws-msk-iam-sasl-signer-python==1.0.2
 
-# OpenAI client for embeddings
-openai==1.10.0
+# OpenAI client for embedding generation
+openai>=1.50.0
 
-# OpenSearch client with AWS auth
-opensearch-py==3.0.0
+# OpenSearch client with AWS IAM authentication
+opensearch-py==3.1.0
 requests-aws4auth==1.3.1
-aiohttp==3.9.0
+aiohttp>=3.9.0
 
-# Async PostgreSQL with IAM auth
+# Async PostgreSQL client for RDS with IAM authentication
 asyncpg==0.31.0
 
-# AWS SDK for IAM authentication
+# AWS SDK for IAM token generation and credentials
 boto3==1.42.43
 
-# Kafka client with MSK IAM auth
-confluent-kafka==2.13.0
+# Redis client for ElastiCache with IAM authentication
+redis>=5.0.0
 
-# Configuration and logging
+# Configuration management
 python-dotenv==1.2.1
 pydantic==2.12.5
 pydantic-settings==2.12.0
+
+# Structured JSON logging
 structlog==25.5.0
 
 # Development dependencies
@@ -34,7 +36,7 @@ pytest==9.0.2
 pytest-asyncio==1.3.0
 pytest-mock==3.15.1
 pytest-cov==7.0.0
-black==26.0.0
-flake8==7.1.2
+black==26.1.0
+flake8==7.3.0
 mypy==1.19.1
 isort==7.0.0
