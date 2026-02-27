@@ -18,7 +18,7 @@ aiohttp>=3.9.0
 asyncpg==0.31.0
 
 # AWS SDK for IAM token generation and credentials
-boto3==1.42.43
+boto3==1.42.59
 
 # Redis client for ElastiCache with IAM authentication
 redis>=5.0.0
