@@ -3,7 +3,7 @@ fastapi==0.128.3
 uvicorn==0.40.0
 
 # Kafka consumer with MSK IAM authentication
-confluent-kafka==2.13.0
+confluent-kafka==2.13.2
 aws-msk-iam-sasl-signer-python==1.0.2
 
 # OpenAI client for embedding generation
